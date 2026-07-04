@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>アカウント登録</h2>
+
+<form method="post">
+    <label>ユーザ名</label>
+    <input type="text" name="username">
+
+    <label>メールアドレス</label>
+    <input type="email" name="email">
+
+    <label>パスワード</label>
+    <input type="password" name="password">
+
+    <button type="submit">登録</button>
+</form>
+
+<p class="link">
+    すでにアカウントを持っている場合は
+    <a href="{{ url_for('login') }}">ログイン画面へ</a>
+</p>
+{% endblock %}

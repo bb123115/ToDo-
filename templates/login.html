@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>ログイン</h2>
+
+<form method="post">
+    <label>メールアドレス</label>
+    <input type="email" name="email">
+
+    <label>パスワード</label>
+    <input type="password" name="password">
+
+    <button type="submit">ログイン</button>
+</form>
+
+<p class="link">
+    アカウントを持っていない場合は
+    <a href="{{ url_for('register') }}">アカウント登録画面へ</a>
+</p>
+{% endblock %}
