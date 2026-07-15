@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToDo一覧</title>
+</head>
+
+<body>
+    <h1>{{ username }}さんのToDoリスト</h1>
+
+    <p>
+        <a href="{{ url_for('logout') }}">ログアウト</a>
+    </p>
+
+    <h2>新しいToDoを追加</h2>
+
+    <form method="POST" action="{{ url_for('add_todo') }}">
+        <div>
+            <label for="title">タイトル</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                required
+            >
+        </div>
+
+        <div>
+            <label for="content">内容</label>
+            <textarea
+                id="content"
+                name="content"
+            ></textarea>
+        </div>
+
+        <div>
+            <label for="due_date">期限</label>
+            <input
+                type="date"
+                id="due_date"
+                name="due_date"
+            >
+        </div>
+
+        <button type="submit">追加する</button>
+    </form>
+
+    <hr>
+
+    <h2>登録したToDo</h2>
+
+    {% if todos %}
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    <strong
+                        {% if todo["status"] == "完了" %}
+                            style="text-decoration: line-through;"
+                        {% endif %}
+                    >
+                        {{ todo["title"] }}
+                    </strong>
+
+                    {% if todo["content"] %}
+                        <p>{{ todo["content"] }}</p>
+                    {% endif %}
+
+                    {% if todo["due_date"] %}
+                        <p>期限：{{ todo["due_date"] }}</p>
+                    {% endif %}
+
+                    <p>状態：{{ todo["status"] }}</p>
+
+                    <a href="{{ url_for('edit_todo', todo_id=todo['id']) }}">
+                        編集する
+                    </a>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('toggle_todo', todo_id=todo['id']) }}"
+                        style="display: inline;"
+                    >
+                        <button type="submit">
+                            {% if todo["status"] == "未完了" %}
+                                完了にする
+                            {% else %}
+                                未完了に戻す
+                            {% endif %}
+                        </button>
+                    </form>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('delete_todo', todo_id=todo['id']) }}"
+                        style="display: inline;"
+                        onsubmit="return confirm('このToDoを削除しますか？');"
+                    >
+                        <button type="submit">削除する</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>登録されているToDoはありません。</p>
+    {% endif %}
+</body>
+</html>

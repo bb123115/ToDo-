@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ToDoを編集</title>
+</head>
+
+<body>
+    <h1>ToDoを編集</h1>
+
+    <form method="POST">
+        <div>
+            <label for="title">タイトル</label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value="{{ todo['title'] }}"
+                required
+            >
+        </div>
+
+        <div>
+            <label for="content">内容</label>
+
+            <textarea
+                id="content"
+                name="content"
+            >{{ todo["content"] or "" }}</textarea>
+        </div>
+
+        <div>
+            <label for="due_date">期限</label>
+
+            <input
+                type="date"
+                id="due_date"
+                name="due_date"
+                value="{{ todo['due_date'] or '' }}"
+            >
+        </div>
+
+        <button type="submit">変更を保存する</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('todo_list') }}">ToDo一覧に戻る</a>
+    </p>
+</body>
+</html>
